@@ -181,6 +181,8 @@ class TradingService:
         """Получает свежий курс; при необходимости один раз обновляет кэш."""
         from_code = get_currency(from_code).code
         to_code = get_currency(to_code).code
+        if from_code == to_code:
+            return self._resolve_rate({}, from_code, to_code)
         try:
             return self._cached_rate(from_code, to_code)
         except (ApiRequestError, ValueError):
